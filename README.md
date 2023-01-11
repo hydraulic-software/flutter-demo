@@ -41,7 +41,3 @@ This repo demos:
 
 1. Importing `pubspec.yaml` to avoid redundant configuration. This requires installing [yq](https://mikefarah.gitbook.io/yq/) in the machine where you run Conveyor.
 2. Downloading the results of GitHub Actions.
-
-## License
-
-**[MIT](LICENSE)**

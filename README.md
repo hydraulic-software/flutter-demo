@@ -11,10 +11,12 @@ Conveyor is a tool that makes distributing desktop apps easier. It builds, signs
 packages for you and offers many useful features like cross-building/signing of packages, different update modes (silent/background and
 update-at-launch), and [much more](https://conveyor.hydraulic.dev/).
 
-## Packaging
+## Packaging it 
 
-Open [conveyor.conf](conveyor.conf), which contains a basic config for Flutter. The package can be built by installing Conveyor and 
-then running:
+Installi [yq](https://mikefarah.gitbook.io/yq/) in the machine where you run Conveyor, and then [install Conveyor](https://conveyor.hydraulic.dev/latest/download-conveyor/).
+
+Open [conveyor.conf](conveyor.conf) and **edit the marked lines**. The config in this repository uses example deployment URLs.
+The package can be built by installing Conveyor and then running:
 
 ```
 conveyor make site
@@ -23,7 +25,7 @@ conveyor make site
 The output directory will now contain packages for Windows, Mac Intel and Mac ARM along with update repository metadata and a generated
 download page.
 
-Conveyor can make packages for all supported OS' from whatever you choose to run it on, but the Flutter build system can't do the same.
+Conveyor can make packages for all supported operating systems from whatever you choose to run it on, but the Flutter build system can't do the same.
 The `conveyor.conf` file therefore imports the raw files to package from the output of a [GitHub Actions CI job](.github/workflows/build.yml).
 
 ## Releasing
@@ -47,7 +49,7 @@ The `conveyor.conf` file therefore imports the raw files to package from the out
 
 This repo demos:
 
-1. Importing `pubspec.yaml` to avoid redundant configuration. This requires installing [yq](https://mikefarah.gitbook.io/yq/) in the machine where you run Conveyor.
+1. Importing `pubspec.yaml` to avoid redundant configuration.
 2. Customizing the generated default icon.
 3. Downloading the results of GitHub Actions.
 4. Hosting the download page on GitHub Pages.

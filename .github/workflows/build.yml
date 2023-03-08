@@ -40,7 +40,7 @@ jobs:
 
       - if: ${{ matrix.target == 'linux' }}
         name: 'Linux: Install Ninja'
-        uses: seanmiddleditch/gha-setup-ninja@v3
+        uses: turtlesec-no/get-ninja@main
 
       - name: Build
         run: flutter build ${{ matrix.target }} --release -v

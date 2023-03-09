@@ -56,7 +56,7 @@ The following are examples of GitHub Workflows to:
 You will need to change your `conveyor.conf` to point your inputs to the
 paths specified in the `download-artifact` steps:
 
-````hocon
+```hocon
 app {
   windows.amd64.inputs += artifacts/windows
   linux.amd64.inputs += artifacts/build-linux-amd64.tar
@@ -73,3 +73,4 @@ This repo demos:
 2. Customizing the generated default icon.
 3. Downloading the results of GitHub Actions.
 4. Hosting the download page on GitHub Pages.
+5. Deploying via GitHub Workflows.

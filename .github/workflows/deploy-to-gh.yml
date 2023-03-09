@@ -1,0 +1,54 @@
+name: Deploy to GitHub
+
+on: [workflow_dispatch]
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Download macOS ARM build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-macos-aarch64
+          path: ./artifacts
+          
+      - name: Download macOS AMD64 build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-macos-amd64
+          path: ./artifacts
+          
+      - name: Download Windows build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-windows-amd64
+          # Windows is not in a tarball, so we extract to a separate directory.
+          path: ./artifacts/windows
+          
+      - name: Download Linux AMD64 build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-linux-amd64
+          path: ./artifacts          
+        
+      - name: Run Conveyor     
+        uses: hydraulic-software/conveyor/actions/build@v1
+        with:
+          command: make site
+          extra_flags: -Kapp.site.copy-to="${{ secrets.COPY_TO }}"
+          signing_key: ${{ secrets.SIGNING_KEY }}
+          agree_to_license: 1
+          
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Flutter Demo"
+          files: output/*   

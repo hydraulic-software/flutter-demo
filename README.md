@@ -50,7 +50,7 @@ The `conveyor.conf` file therefore imports the raw files to package from the out
 ## Deployment via GitHub Workflow
 
 The following are examples of GitHub Workflows to:
- * [Deploy to SSH](.github/workflows/deploy-to-ssh.yml)
+ * [Deploy via SSH](.github/workflows/deploy-to-ssh.yml)
  * [Deploy to GitHub Releases](.github/workflows/deploy-to-gh.yml)
 
 You will need to change your `conveyor.conf` to point your inputs to the

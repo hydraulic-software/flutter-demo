@@ -11,9 +11,11 @@ Conveyor is a tool that makes distributing desktop apps easier. It builds, signs
 packages for you and offers many useful features like cross-building/signing of packages, different update modes (silent/background and
 update-at-launch), and [much more](https://conveyor.hydraulic.dev/).
 
-## Packaging it 
+## Deployment via external machine
 
-Installi [yq](https://mikefarah.gitbook.io/yq/) in the machine where you run Conveyor, and then [install Conveyor](https://conveyor.hydraulic.dev/latest/download-conveyor/).
+### Packaging it 
+
+Install [yq](https://mikefarah.gitbook.io/yq/) in the machine where you run Conveyor, and then [install Conveyor](https://conveyor.hydraulic.dev/latest/download-conveyor/).
 
 Open [conveyor.conf](conveyor.conf) and **edit the marked lines**. The config in this repository uses example deployment URLs.
 The package can be built by installing Conveyor and then running:
@@ -28,22 +30,40 @@ download page.
 Conveyor can make packages for all supported operating systems from whatever you choose to run it on, but the Flutter build system can't do the same.
 The `conveyor.conf` file therefore imports the raw files to package from the output of a [GitHub Actions CI job](.github/workflows/build.yml).
 
-## Releasing
+### Releasing
 
-### To a standard website
+#### To a standard website
 
 * Make sure the `app.site.base-url` points to it, and if wanted, set `app.site.copy-to` to an SFTP URL for file upload. 
 * Run `conveyor make site --rerun=all`. The `--rerun=all` flag is needed to force a re-download of whatever the latest CI run has produced.
   In a real app you would point the inputs at a versioned URL and forcing a rerun wouldn't be necessary. Use `copied-site` instead of `site`
   if Conveyor can upload the files for you. Otherwise, upload the results yourself.
 
-### To GitHub Releases
+#### To GitHub Releases
 
 * Delete the `app.site` object from `conveyor.conf`. The defaults for open source projects on GitHub is to use Releases.
 * Run `conveyor make site --rerun=all`. The `--rerun=all` flag is needed to force a re-download of whatever the latest CI run has produced.
   In a real app you would point the inputs at a versioned URL and forcing a rerun wouldn't be necessary.
 * Create a new release with the contents of the `output` directory, except for `download.html` and `icon.svg`. Those files should go into
   the `docs` directory.
+
+## Deployment via GitHub Workflow
+
+The following are examples of GitHub Workflows to:
+ * [Deploy to SSH](.github/workflows/deploy-to-ssh.yml)
+ * [Deploy to GitHub Releases](.github/workflows/deploy-to-gh.yml)
+
+You will need to change your `conveyor.conf` to point your inputs to the
+paths specified in the `download-artifact` steps:
+
+````hocon
+app {
+  windows.amd64.inputs += artifacts/windows
+  linux.amd64.inputs += artifacts/build-linux-amd64.tar
+  mac.amd64.inputs += artifacts/build-macos-amd64.tar
+  mac.aarch64.inputs += artifacts/build-macos-aarch64.tar  
+}
+```
 
 ## Packaging features used
 

@@ -11,7 +11,7 @@ Conveyor is a tool that makes distributing desktop apps easier. It builds, signs
 packages for you and offers many useful features like cross-building/signing of packages, different update modes (silent/background and
 update-at-launch), and [much more](https://conveyor.hydraulic.dev/).
 
-## Deployment via external machine
+## Deployment from your laptop
 
 ### Packaging it 
 

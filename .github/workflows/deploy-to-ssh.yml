@@ -46,6 +46,8 @@ jobs:
         uses: hydraulic-software/conveyor/actions/build@v9.2
         with:
           command: make copied-site
+          # In case the "copy-to" value is sensitive, you can set it up as a repository secret.
+          # The following line will override the setting of "app.site.copy-to".
           extra_flags: -Kapp.site.copy-to="${{ secrets.COPY_TO }}"
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
